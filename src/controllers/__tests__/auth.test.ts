@@ -1,17 +1,21 @@
 import request from "supertest";
 import { app } from "../../index";
 
-describe("/auth", () => {
+describe("/login", () => {
   it("should return 200 and user", async () => {
     const user = {
-      username: 'user',
       email: 'user@mail.com',
       password: '12345678'
     }
 
-    await request(app)
-    .post("/api/auth/registration")
+    const response = await request(app)
+    .post("/api/auth/login")
     .send(user)
-    .expect(200, user);
+    .expect(200)
+
+    const {username, email} = response.body
+
+    expect(username).toBe('user')
+    expect(email).toBe('user@mail.com')
   });
 });

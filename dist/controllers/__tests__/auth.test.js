@@ -13,9 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const index_1 = require("../src/index");
-describe("/api", () => {
-    it("should return 200 and hello", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield (0, supertest_1.default)(index_1.app).get("/").expect(200, "APP IS RUNNING");
+const index_1 = require("../../index");
+describe("/login", () => {
+    it("should return 200 and user", () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = {
+            email: 'user@mail.com',
+            password: '12345678'
+        };
+        const response = yield (0, supertest_1.default)(index_1.app)
+            .post("/api/auth/login")
+            .send(user)
+            .expect(200);
+        const { username, email } = response.body;
+        expect(username).toBe('user');
+        expect(email).toBe('user@mail.com');
     }));
 });

@@ -8,33 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("../models/User"));
-class AuthController {
-    registration(req, res, next) {
+class productController {
+    createProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { username, email, password } = req.body;
-                const newUser = yield User_1.default.create({ username, email, password });
-                yield newUser.save();
-                res.json(newUser);
+                res.status(200).json({});
             }
             catch (error) {
-                console.log(error);
-            }
-        });
-    }
-    login(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-            }
-            catch (error) {
-                console.log(error);
+                res.status(500).json(error);
             }
         });
     }
 }
-exports.default = new AuthController();
+exports.default = new productController();

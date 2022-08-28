@@ -16,7 +16,9 @@ exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const userRouter_1 = __importDefault(require("./routers/userRouter"));
 const authRouter_1 = __importDefault(require("./routers/authRouter"));
+const productRouter_1 = __importDefault(require("./routers/productRouter"));
 dotenv_1.default.config();
 exports.app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +28,8 @@ exports.app.get("/", (req, res) => {
     res.send("APP IS RUNNING");
 });
 exports.app.use('/api/auth', authRouter_1.default);
+exports.app.use('/api/user', userRouter_1.default);
+exports.app.use('/api/product', productRouter_1.default);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(DB_URL, {
