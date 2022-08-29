@@ -9,7 +9,7 @@ const authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"
 const userRouter = (0, express_1.Router)();
 userRouter.put("/:id", authMiddleware_1.default, userController_1.default.updateUser);
 userRouter.delete("/:id", authMiddleware_1.default, userController_1.default.deleteUser);
-userRouter.get("/stats", authMiddleware_1.default, userController_1.default.getUserStats);
+userRouter.get("/stats", authMiddleware_1.default, userController_1.default.getUsersStats);
 userRouter.get("/:id", authMiddleware_1.default, userController_1.default.getUser);
-userRouter.get("/", authMiddleware_1.default, userController_1.default.getAllUser);
+userRouter.get("/", authMiddleware_1.default, userController_1.default.getAllUsers);
 exports.default = userRouter;

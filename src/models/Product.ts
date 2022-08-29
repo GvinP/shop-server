@@ -8,7 +8,7 @@ export interface IProduct {
   categories: string[];
   size: string;
   color: string;
-  price: string;
+  price: number;
   createdAt: Date;
 }
 
@@ -20,7 +20,7 @@ const ProductSchema: Schema = new Schema<IProduct>(
     categories: { type: [String], required: true },
     size: { type: String },
     color: { type: String },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
   },
   { timestamps: true }
 );

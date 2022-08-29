@@ -29,7 +29,7 @@ exports.app.get("/", (req, res) => {
 });
 exports.app.use('/api/auth', authRouter_1.default);
 exports.app.use('/api/user', userRouter_1.default);
-exports.app.use('/api/product', productRouter_1.default);
+exports.app.use('/api/products', productRouter_1.default);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(DB_URL, {

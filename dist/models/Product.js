@@ -8,6 +8,6 @@ const ProductSchema = new mongoose_1.Schema({
     categories: { type: [String], required: true },
     size: { type: String },
     color: { type: String },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
 }, { timestamps: true });
 exports.default = (0, mongoose_1.model)("Product", ProductSchema);

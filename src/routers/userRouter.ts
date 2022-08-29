@@ -6,8 +6,8 @@ const userRouter = Router();
 
 userRouter.put("/:id", authMiddleware, userController.updateUser);
 userRouter.delete("/:id", authMiddleware, userController.deleteUser);
-userRouter.get("/stats", authMiddleware, userController.getUserStats);
+userRouter.get("/stats", authMiddleware, userController.getUsersStats);
 userRouter.get("/:id", authMiddleware, userController.getUser);
-userRouter.get("/", authMiddleware, userController.getAllUser);
+userRouter.get("/", authMiddleware, userController.getAllUsers);
 
 export default userRouter;

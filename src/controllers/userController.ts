@@ -53,7 +53,7 @@ class userController {
     }
   }
 
-  async getAllUser(req: AuthRequest, res: Response) {
+  async getAllUsers(req: AuthRequest, res: Response) {
     try {
       const query = req.query.new;
       if (!req.user?.isAdmin) {
@@ -68,7 +68,7 @@ class userController {
     }
   }
 
-  async getUserStats(req: AuthRequest, res: Response) {
+  async getUsersStats(req: AuthRequest, res: Response) {
     try {
       if (!req.user?.isAdmin) {
         res.status(403).json("Forbidden");

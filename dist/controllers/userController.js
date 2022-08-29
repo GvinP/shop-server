@@ -65,7 +65,7 @@ class userController {
             }
         });
     }
-    getAllUser(req, res) {
+    getAllUsers(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -83,7 +83,7 @@ class userController {
             }
         });
     }
-    getUserStats(req, res) {
+    getUsersStats(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             try {
