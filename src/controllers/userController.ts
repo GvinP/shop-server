@@ -1,7 +1,5 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import User from "../models/User";
-import CryptoJS from "crypto-js";
-import jwt from "jsonwebtoken";
 import { AuthRequest } from "../middlewares/authMiddleware";
 
 class userController {

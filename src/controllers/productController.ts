@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import Product from "../models/Product";
-import CryptoJS from "crypto-js";
-import jwt from "jsonwebtoken";
 import { AuthRequest } from "../middlewares/authMiddleware";
 
 class productController {
@@ -38,11 +36,11 @@ class productController {
   }
 
   async deleteProduct(req: AuthRequest, res: Response) {
+    if (!req.user?.isAdmin) {
+      res.status(403).json("Forbidden");
+    }
     try {
       const { id } = req.params;
-      if (!req.user?.isAdmin) {
-        res.status(403).json("Forbidden");
-      }
       await Product.findByIdAndDelete(id);
       res.status(200).json("Product has been deleted");
     } catch (error) {

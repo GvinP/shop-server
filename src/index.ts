@@ -4,6 +4,7 @@ import mongoose, { ConnectOptions } from "mongoose";
 import userRouter from "./routers/userRouter";
 import authRouter from "./routers/authRouter";
 import productRouter from "./routers/productRouter";
+import cartRouter from "./routers/cartRouter";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/products', productRouter)
+app.use('/api/cart', cartRouter)
 
 const start = async () => {
   try {
