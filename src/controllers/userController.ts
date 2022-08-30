@@ -39,8 +39,6 @@ class userController {
   async getUser(req: AuthRequest, res: Response) {
     try {
       const { id } = req.params;
-      console.log('getUser ',req.user);
-
       if (!req.user?.isAdmin) {
         res.status(403).json("Forbidden");
       }

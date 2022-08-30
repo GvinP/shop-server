@@ -12,100 +12,103 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("../models/User"));
-class userController {
-    updateUser(req, res) {
-        var _a;
+const Order_1 = __importDefault(require("../models/Order"));
+class orderController {
+    createOrder(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const newOrder = yield Order_1.default.create(req.body);
+                yield newOrder.save();
+                res.status(200).json(newOrder);
+            }
+            catch (error) {
+                res.status(500).json(error);
+            }
+        });
+    }
+    updateOrder(req, res) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
+                res.status(403).json("Forbidden");
+            }
+            try {
                 const { id } = req.params;
-                if (id !== ((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
-                    res.status(403).json("Forbidden");
-                }
-                const updatedUser = yield User_1.default.findByIdAndUpdate(id, {
+                const updatedOrder = yield Order_1.default.findByIdAndUpdate(id, {
                     $set: req.body,
                 }, { new: true });
-                res.status(200).json(updatedUser);
+                res.status(200).json(updatedOrder);
             }
             catch (error) {
                 res.status(500).json(error);
             }
         });
     }
-    deleteUser(req, res) {
-        var _a;
+    deleteOrder(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
-                    res.status(403).json("Forbidden");
-                }
-                yield User_1.default.findByIdAndDelete(id);
-                res.status(200).json("User has been deleted");
+                yield Order_1.default.findByIdAndDelete(id);
+                res.status(200).json("Order has been deleted");
             }
             catch (error) {
                 res.status(500).json(error);
             }
         });
     }
-    getUser(req, res) {
-        var _a;
+    getOrders(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id } = req.params;
-                if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
-                    res.status(403).json("Forbidden");
-                }
-                const user = yield User_1.default.findById(id);
-                res.status(200).json(user);
+                const { userId } = req.params;
+                const orders = yield Order_1.default.find({ user: userId });
+                res.status(200).json(orders);
             }
             catch (error) {
                 res.status(500).json(error);
             }
         });
     }
-    getAllUsers(req, res) {
+    getAllOrders(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
+                res.status(403).json("Forbidden");
+            }
             try {
-                const query = req.query.new;
-                if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
-                    res.status(403).json("Forbidden");
-                }
-                const users = query
-                    ? yield User_1.default.find().sort({ _id: -1 }).limit(5)
-                    : yield User_1.default.find();
-                res.status(200).json(users);
+                const orders = yield Order_1.default.find();
+                res.status(200).json(orders);
             }
             catch (error) {
                 res.status(500).json(error);
             }
         });
     }
-    getUsersStats(req, res) {
+    getMonthlyIncome(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
+                res.status(403).json("Forbidden");
+            }
+            const date = new Date();
+            const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
+            const previosMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
             try {
-                if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
-                    res.status(403).json("Forbidden");
-                }
-                const date = new Date();
-                const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
-                const data = yield User_1.default.aggregate([
-                    { $match: { createdAt: { $gte: lastYear } } },
+                const income = yield Order_1.default.aggregate([
+                    { $match: { createdAt: { $gte: previosMonth } } },
                     {
                         $project: {
-                            month: { $month: "$createdAt" }
-                        }
+                            month: { $month: "$createdAt" },
+                            sales: "$amount",
+                        },
                     },
                     {
                         $group: {
                             _id: "$month",
-                            total: { $sum: 1 }
-                        }
-                    }
+                            total: { $sum: "$sales" },
+                        },
+                    },
                 ]);
-                res.status(200).json(data);
+                res.status(200).json(income);
             }
             catch (error) {
                 res.status(500).json(error);
@@ -113,4 +116,4 @@ class userController {
         });
     }
 }
-exports.default = new userController();
+exports.default = new orderController();

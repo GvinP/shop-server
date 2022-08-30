@@ -5,6 +5,8 @@ import userRouter from "./routers/userRouter";
 import authRouter from "./routers/authRouter";
 import productRouter from "./routers/productRouter";
 import cartRouter from "./routers/cartRouter";
+import orderRouter from "./routers/orderRouter";
+import paymentRouter from "./models/paymentRouter";
 
 dotenv.config();
 
@@ -24,6 +26,8 @@ app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/cart', cartRouter)
+app.use('/api/orders', orderRouter)
+app.use('/api/payment', paymentRouter)
 
 const start = async () => {
   try {
