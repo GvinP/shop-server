@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const userRouter_1 = __importDefault(require("./routers/userRouter"));
 const authRouter_1 = __importDefault(require("./routers/authRouter"));
@@ -27,6 +28,7 @@ exports.app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.MONGODB_URL || "";
 exports.app.use(express_1.default.json());
+exports.app.use((0, cors_1.default)());
 exports.app.get("/", (req, res) => {
     res.send("APP IS RUNNING");
 });

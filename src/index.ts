@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import mongoose, { ConnectOptions } from "mongoose";
 import userRouter from "./routers/userRouter";
 import authRouter from "./routers/authRouter";
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.MONGODB_URL || "";
 
 app.use(express.json())
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.send("APP IS RUNNING");
