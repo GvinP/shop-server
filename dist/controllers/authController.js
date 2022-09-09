@@ -52,11 +52,11 @@ class AuthController {
                 const user = yield User_1.default.findOne({ email });
                 console.log(user);
                 if (!user) {
-                    res.status(401).json("Unauthorized");
+                    return res.status(401).json("Unauthorized");
                 }
                 const decryptedPassword = crypto_js_1.default.AES.decrypt(user === null || user === void 0 ? void 0 : user.password, process.env.SECRET_PHRASE);
                 if (userPassword !== decryptedPassword.toString(crypto_js_1.default.enc.Utf8)) {
-                    res.status(401).json("Unauthorized");
+                    return res.status(401).json("Unauthorized");
                 }
                 const accessToken = jsonwebtoken_1.default.sign({
                     id: user === null || user === void 0 ? void 0 : user._id,

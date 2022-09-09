@@ -31,7 +31,7 @@ class AuthController {
       console.log(user);
       
       if (!user) {
-        res.status(401).json("Unauthorized");
+        return res.status(401).json("Unauthorized");
       }
       const decryptedPassword = CryptoJS.AES.decrypt(
         user?.password!,
@@ -39,7 +39,7 @@ class AuthController {
       );
 
       if (userPassword !== decryptedPassword.toString(CryptoJS.enc.Utf8)) {
-        res.status(401).json("Unauthorized");
+        return res.status(401).json("Unauthorized");
       }
       const accessToken = jwt.sign({
         id: user?._id,
