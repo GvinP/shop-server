@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   password: string;
   isAdmin: boolean;
+  image: string;
   createdAt: Date;
 }
 
@@ -15,6 +16,7 @@ const UserSchema: Schema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isAdmin: { type: Boolean, default: false },
+    image: { type: String },
   },
   { timestamps: true }
 );
