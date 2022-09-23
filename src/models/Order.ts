@@ -7,7 +7,7 @@ export interface IOrder {
   products: ICartItem[];
   amount: number;
   address: IAddress;
-  status: "pending" | "fullfild";
+  status: "Pending" | "Approved" | "Decliend";
 }
 
 export interface IAddress {
@@ -25,7 +25,7 @@ const OrderSchema: Schema = new Schema<IOrder>(
     ],
     amount: { type: Number, required: true },
     address: { type: Object, required: true },
-    status: { type: String, default: "pending" },
+    status: { type: String, default: "Pending" },
   },
   { timestamps: true }
 );
