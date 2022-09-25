@@ -89,12 +89,17 @@ class orderController {
             if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
                 res.status(403).json("Forbidden");
             }
+            const productId = req.query.id;
             const date = new Date();
             const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
             const previosMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
             try {
                 const income = yield Order_1.default.aggregate([
-                    { $match: { createdAt: { $gte: previosMonth } } },
+                    {
+                        $match: Object.assign({ createdAt: { $gte: previosMonth } }, (productId && {
+                            products: { $elemMatch: { productId } },
+                        })),
+                    },
                     {
                         $project: {
                             month: { $month: "$createdAt" },

@@ -8,7 +8,7 @@ export interface IProduct {
   categories: string[];
   size: string[];
   color: string[];
-  price: number;
+  price: string;
   inStock: boolean;
   createdAt: Date;
 }
@@ -21,7 +21,7 @@ const ProductSchema: Schema = new Schema<IProduct>(
     categories: { type: [String], required: true },
     size: { type: [String] },
     color: { type: [String] },
-    price: { type: Number, required: true },
+    price: { type: String, required: true },
     inStock: {type: Boolean, default: true},
   },
   { timestamps: true }

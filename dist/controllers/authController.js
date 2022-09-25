@@ -50,7 +50,6 @@ class AuthController {
             try {
                 const { email, password: userPassword } = req.body;
                 const user = yield User_1.default.findOne({ email });
-                console.log(user);
                 if (!user) {
                     return res.status(401).json("Unauthorized");
                 }

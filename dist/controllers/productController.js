@@ -88,8 +88,8 @@ class productController {
                 else if (qCategory) {
                     products = yield Product_1.default.find({
                         categories: {
-                            $in: [qCategory]
-                        }
+                            $in: [qCategory],
+                        },
                     });
                 }
                 else {

@@ -68,6 +68,7 @@ class orderController {
     if (!req.user?.isAdmin) {
       res.status(403).json("Forbidden");
     }
+    const productId = req.query.id;
     const date = new Date();
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
     const previosMonth = new Date(
@@ -75,7 +76,14 @@ class orderController {
     );
     try {
       const income = await Order.aggregate([
-        { $match: { createdAt: { $gte: previosMonth } } },
+        {
+          $match: {
+            createdAt: { $gte: previosMonth },
+            ...(productId && {
+              products: { $elemMatch: { productId } },
+            }),
+          },
+        },
         {
           $project: {
             month: { $month: "$createdAt" },
